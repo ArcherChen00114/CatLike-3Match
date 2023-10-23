@@ -1,17 +1,5 @@
-# Prototypes 1: Paddle Square
+# Prototypes 6 : Match 3
 
-[This is the first tutorial in a series about prototypes.](https://catlikecoding.com/unity/tutorials/prototypes/paddle-square/) In it we will create a simple Pong clone.
-
-## License
-
-MIT No Attribution (MIT-0)
-
-Copyright 2023 Jasper Flick
-
-Permission is hereby granted, free of charge, to any person obtaining a copy of this software and associated documentation files (the "Software"), to deal in the Software without restriction, including without limitation the rights to use, copy, modify, merge, publish, distribute, sublicense, and/or sell copies of the Software, and to permit persons to whom the Software is furnished to do so.
-
-THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
-
-## Giving Credit
-
-If you want to credit me in your work you can do so by mentioning [Jasper Flick](https://catlikecoding.com/jasper-flick/) and/or [Catlike Coding](https://catlikecoding.com).
+[This is the sixth tutorial in a series about prototypes.](https://catlikecoding.com/unity/tutorials/prototypes/match-3/) In it we will create a Match3 Game
+跟着CatLikeCoding的游戏原型第六章：三消游戏制作，正在编写对应的翻译。
+基本实现效果与本章内一致，代码设置也基本一致，仅用作个人的备份，如有需要请到原教程中下载UnityPackage（下载本仓库内的包也没有太大影响，但是版本或者项目设置可能会有些许差异）
