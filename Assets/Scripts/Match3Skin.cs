@@ -26,7 +26,10 @@ public class Match3Skin : MonoBehaviour
     float newDropOffset = 2f;
 
     [SerializeField]
-    TextMeshPro totalScoreText;
+    TextMeshPro gameOverText, totalScoreText;
+
+    [SerializeField]
+    FloatingScore floatingScorePrefab;
 
     float busyDuration;
 
@@ -34,14 +37,17 @@ public class Match3Skin : MonoBehaviour
 
 	float2 tileOffset;
 
-	public bool IsPlaying => true;
+    float floatingScoreZ;
+    public bool IsPlaying => IsBusy || game.PossibleMove.IsValid;
 
     public bool IsBusy => busyDuration > 0f;
 
+    public void DoAutomaticMove() => DoMove(game.PossibleMove);
     public void StartNewGame()
     {
         busyDuration = 0f;
         totalScoreText.SetText("0");
+        gameOverText.gameObject.SetActive(false);
         game.StartNewGame();
 		tileOffset = -0.5f * (float2)(game.Size - 1);
 		if (tiles.IsUndefined)
@@ -110,6 +116,10 @@ public class Match3Skin : MonoBehaviour
         {
             DropTiles();
         }
+        else if (!IsPlaying)
+        {
+            gameOverText.gameObject.SetActive(true);
+        }
     }
     void ProcessMatches()
     {
@@ -123,6 +133,20 @@ public class Match3Skin : MonoBehaviour
         }
 
         totalScoreText.SetText("{0}", game.TotalScore);
+
+        for (int i = 0; i < game.Scores.Count; i++)
+        {
+            SingleScore score = game.Scores[i];
+            floatingScorePrefab.Show(
+                new Vector3(
+                    score.position.x + tileOffset.x,
+                    score.position.y + tileOffset.y,
+                    floatingScoreZ
+                ),
+                score.value
+            );
+            floatingScoreZ = floatingScoreZ <= -0.02f ? 0f : floatingScoreZ - 0.001f;
+        }
     }
     void DropTiles()
     {

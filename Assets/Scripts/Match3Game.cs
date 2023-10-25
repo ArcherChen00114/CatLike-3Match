@@ -17,7 +17,11 @@ public class Match3Game : MonoBehaviour
     { get; private set; }
     public List<TileDrop> DroppedTiles
     { get; private set; }
+    public List<SingleScore> Scores
+    { get; private set; }
 
+    public Move PossibleMove
+    { get; private set; }
     public bool NeedsFilling
     { get; private set; }
     public int TotalScore
@@ -25,6 +29,8 @@ public class Match3Game : MonoBehaviour
     public bool HasMatches => matches.Count > 0;
 
     List<Match> matches;
+
+    int scoreMultiplier;
     public TileState this[int x, int y] => grid[x, y];
 
 	public TileState this[int2 c] => grid[c];
@@ -40,11 +46,17 @@ public class Match3Game : MonoBehaviour
 			matches = new();
             ClearedTileCoordinates = new();
             DroppedTiles = new();
+            Scores = new();
         }
-		FillGrid(); 
-		
+        do
+        {
+            FillGrid();
+            PossibleMove = Move.FindMove(this);
+        }
+        while (!PossibleMove.IsValid);
 
-	}
+
+    }
     bool FindMatches()
     {
         for (int y = 0; y < size.y; y++)
@@ -129,11 +141,15 @@ public class Match3Game : MonoBehaviour
             }
         }
 
-        NeedsFilling = false;
-        FindMatches();
+        NeedsFilling = false; 
+        if (!FindMatches())
+        {
+            PossibleMove = Move.FindMove(this);
+        }
     }
     public bool TryMove(Move move)
     {
+        scoreMultiplier = 1;
         grid.Swap(move.From, move.To);
         if (FindMatches())
         {
@@ -145,6 +161,7 @@ public class Match3Game : MonoBehaviour
     public void ProcessMatches()
     {
         ClearedTileCoordinates.Clear();
+        Scores.Clear();
 
         for (int m = 0; m < matches.Count; m++)
         {
@@ -159,8 +176,13 @@ public class Match3Game : MonoBehaviour
                     ClearedTileCoordinates.Add(c);
                 }
             }
-
-            TotalScore += match.length;
+            var score = new SingleScore
+            {
+                position = match.coordinates + (float2)step * (match.length - 1) * 0.5f,
+                value = match.length * scoreMultiplier++
+            };
+            Scores.Add(score);
+            TotalScore += score.value;
         }
 
         matches.Clear();

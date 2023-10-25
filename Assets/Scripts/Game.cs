@@ -5,6 +5,11 @@ public class Game : MonoBehaviour
 	[SerializeField]
 	Match3Skin match3;
 
+    [SerializeField]
+    bool automaticPlay;
+
+
+
     Vector3 dragStart;
 
     bool isDragging;
@@ -29,7 +34,11 @@ public class Game : MonoBehaviour
 
 	void HandleInput() {
 
-        if (!isDragging && Input.GetMouseButtonDown(0))
+        if (automaticPlay)
+        {
+            match3.DoAutomaticMove();
+        }
+        else if (!isDragging && Input.GetMouseButtonDown(0))
         {
             dragStart = Input.mousePosition;
             isDragging = true;
